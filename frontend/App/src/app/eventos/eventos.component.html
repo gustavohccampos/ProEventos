@@ -17,10 +17,10 @@
       </div>
     </div>
 
-    <div class="col-2 pl-5 ml-1">
+    <div class="col-1 pl-5 ml-1" ngbTooltip="Novo Evento">
       <a class="d-flex btn btn-outline-primary" routerLink="/eventos/detalhe">
         <i class="fa fa-plus-circle my-1"></i>
-        <b class="ml-1 d-none d-sm-block">Novo</b>
+        <b class="ml-1 d-none d-sm-block">&nbsp;Novo</b>
       </a>
     </div>
   </div>
@@ -54,14 +54,22 @@
           <img [collapse]="viewImg" [isAnimated]="true" src="/assets/{{evento.imagemURL}}" [style.width.px]="widthImg"
             [style.margin.px]="marginImg">
         </td>
-        <td>{{evento.eventoId}}</td>
+        <td>{{evento.id}}</td>
         <td>{{evento.tema}}</td>
         <td>{{evento.local}}</td>
-        <td>{{evento.dataEvento}}</td>
+        <td>{{evento.dataEvento | DateTimeFormatPipe}}</td>
         <td>{{evento.qntPessoas}}</td>
-        <td>{{evento.lote}}</td>
-        <td><button type="button" class="btn btn-primary btn-sm me-3">Editar</button>
-          <button type="button" class="btn btn-danger btn-sm">Excluir</button>
+        <td>{{evento.lote[0]?.nome}}</td>
+        <td>
+
+          <button type="button" class="btn btn-primary btn-sm me-3" ngbTooltip="Editar">
+            <i class="fa fa-edit"></i>
+
+          </button>
+          <button type="button" class="btn btn-danger btn-sm" ngbTooltip="Excluir" (click)="openModal(template)">
+            <i class=" fa fa-trash"></i>
+
+          </button>
         </td>
       </tr>
 
@@ -76,3 +84,10 @@
 
   </table>
 </div>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Do you want to confirm?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()">Yes</button>
+    <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+  </div>
+</ng-template>
